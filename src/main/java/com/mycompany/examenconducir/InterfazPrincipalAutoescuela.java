@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.mycompany.examenconducir;
 
 
@@ -14,9 +11,11 @@ import javax.swing.ImageIcon;
  * @author diego
  */
 public class InterfazPrincipalAutoescuela extends javax.swing.JFrame {
-    public static String baseElegida;
+    
+    // Esta es la clase principal de nuestra aplicación, es la clase encargada de dar la opción al usuario sobre que tipo de examen quiere
+    // Por lo que su misión es en esencia la de establecer el filtro para poder acceder a una u otra base de datos de las tres disponibles.
+    public static String baseElegida;  // Esta es la variable que va a definir el tipo de base que elegiremos, tomará un valor en función del click seleccionado por el usuario.
 
-   
     public InterfazPrincipalAutoescuela() {
         initComponents();
         this.setResizable(false);
@@ -32,8 +31,6 @@ public class InterfazPrincipalAutoescuela extends javax.swing.JFrame {
         Icon dgtIcon = new ImageIcon (dgt.getImage().getScaledInstance(dgt_label.getWidth(), dgt_label.getHeight(), Image.SCALE_DEFAULT));
         dgt_label.setIcon(dgtIcon);
 
-        
-        
         ImageIcon imagenCoche = new ImageIcon ("src/main/resources/imagenes/logo_coche.png");
         Icon iconoCoche = new ImageIcon (imagenCoche.getImage().getScaledInstance(logo_coche.getWidth(), logo_coche.getHeight(), Image.SCALE_DEFAULT));
         logo_coche.setIcon(iconoCoche);
@@ -47,18 +44,7 @@ public class InterfazPrincipalAutoescuela extends javax.swing.JFrame {
         logo_camion.setIcon(iconoCamion);
         
     }
-    
-
-
-
-    
-    
-    
-    
-    
-    
-    
-  
+     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -297,12 +283,12 @@ public class InterfazPrincipalAutoescuela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logo_cocheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logo_cocheMouseClicked
+        // A continuación podemos observar como en función del elemento en el cual clicken, hemos creado un evento de on MouseClicked
+        //Que asigna un valor a nuestra variable baseElegida y nos pasa de forma inmediata a la siguiente pantalla.
         baseElegida = "coche";
         DificultadExamen  newframe = new DificultadExamen ();
         newframe.setVisible(true);
         this.dispose();
-        
-      
     }//GEN-LAST:event_logo_cocheMouseClicked
 
     private void textoCocheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textoCocheMouseClicked
@@ -310,43 +296,34 @@ public class InterfazPrincipalAutoescuela extends javax.swing.JFrame {
         DificultadExamen  newframe = new DificultadExamen ();
         newframe.setVisible(true);
         this.dispose();
-             
-    
     }//GEN-LAST:event_textoCocheMouseClicked
 
     private void textoMotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textoMotoMouseClicked
         baseElegida = "moto";
         DificultadExamen  newframe = new DificultadExamen ();
         newframe.setVisible(true);
-        this.dispose();
-       
+        this.dispose();      
     }//GEN-LAST:event_textoMotoMouseClicked
 
     private void logo_motoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logo_motoMouseClicked
         baseElegida = "moto";
         DificultadExamen  newframe = new DificultadExamen ();
         newframe.setVisible(true);
-        this.dispose();
-       
-        
+        this.dispose();   
     }//GEN-LAST:event_logo_motoMouseClicked
 
     private void textoCamionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textoCamionMouseClicked
         baseElegida = "camion";
         DificultadExamen  newframe = new DificultadExamen ();
         newframe.setVisible(true);
-        this.dispose();
-       
-        
+        this.dispose();  
     }//GEN-LAST:event_textoCamionMouseClicked
 
     private void logo_camionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logo_camionMouseClicked
         baseElegida = "camion";
         DificultadExamen  newframe = new DificultadExamen ();
         newframe.setVisible(true);
-        this.dispose();
-      
-        
+        this.dispose();   
     }//GEN-LAST:event_logo_camionMouseClicked
 
     /**

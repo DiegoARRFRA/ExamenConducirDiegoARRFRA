@@ -202,7 +202,7 @@ public final class DificultadExamen extends javax.swing.JFrame {
         if (permitido = false) {
             JOptionPane.showMessageDialog(this,"Se debe de seleccionar un número de preguntas para crear el examen");          
         } else {
-            esquemaExamenCoche  newframe = new esquemaExamenCoche ();
+            EsquemaExamen  newframe = new EsquemaExamen ();
             newframe.setVisible(true);
             this.dispose();
         }

@@ -40,8 +40,21 @@ public class ObjetoRespuestas {
         return obtenerRespuestaFalsaDos(id);
     }
     
+    public static void vaciarElementos () {
+        respuestaCorrecta.clear();
+        respuestaIncorrectaUno.clear();
+        respuestaIncorrectaDos.clear();
+        respuestaIncorrectaTres.clear();
+        respuestaIncorrectaCuatro.clear();
+        respuestaIncorrectaCinco.clear();
+        respuestasRandomFalsas.clear();
+
+
+    }
+    
     // Este método sirve para rellenar en nuestro arraylist todas las respuestas correctas extraidas de las preguntas que hemos sacado de la base de datos
     public static void obtenerRespuestaCorrecta () {       
+        vaciarElementos();
        for (int k = 0; k < idPregunta.size(); k++) {
            String query = "Select enunciado_respuesta from respuestas where id_pregunta = " + idPregunta.get(k);
            try(var ObtenerRespuestaCorrecta = DriverManager.getConnection(url);

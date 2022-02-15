@@ -34,7 +34,6 @@ public class MostrarPreguntaErronea extends javax.swing.JFrame {
         ImageIcon dgt = new ImageIcon ("src/main/resources/imagenes/dgt.png");
         Icon dgtIcon = new ImageIcon (dgt.getImage().getScaledInstance(dgt_label.getWidth(), dgt_label.getHeight(), Image.SCALE_DEFAULT));
         dgt_label.setIcon(dgtIcon);
-        
         // El método rellenar contenido es el que va a operar con todos los submetodos
         rellenarContenido();
     }

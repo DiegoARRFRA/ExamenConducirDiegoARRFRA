@@ -7,6 +7,7 @@ import static com.mycompany.examenconducir.DificultadExamen.url;
 import static com.mycompany.examenconducir.ObjetoImagenes.rellenarArrayImagenes;
 import static com.mycompany.examenconducir.ObjetoImagenes.rutaImagenes;
 import static com.mycompany.examenconducir.ObjetoPreguntas.getEnunciado_pregunta;
+import static com.mycompany.examenconducir.ObjetoPreguntas.idPregunta;
 import static com.mycompany.examenconducir.ObjetoPreguntas.obtenerPreguntas;
 import static com.mycompany.examenconducir.ObjetoRespuestas.elegirRandomIdRespuestaIncorrecta;
 import static com.mycompany.examenconducir.ObjetoRespuestas.getRespuestaCorrecta;
@@ -18,6 +19,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -27,7 +29,7 @@ import javax.swing.JOptionPane;
  *
  * @author diego
  */
-public final class esquemaExamenCoche extends javax.swing.JFrame {
+public final class EsquemaExamen extends javax.swing.JFrame {
    
 
     ArrayList<Integer> opcionesBotones= new ArrayList<>();
@@ -41,10 +43,10 @@ public final class esquemaExamenCoche extends javax.swing.JFrame {
     int numeroBotonSeleccionado;
 
 
-    public esquemaExamenCoche() {
-        vaciarTabla();       
-        obtenerExamen();
+    public EsquemaExamen() {
         initComponents();
+        VaciarTabla();       
+        obtenerExamen();
         establecerElementos();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -54,6 +56,7 @@ public final class esquemaExamenCoche extends javax.swing.JFrame {
         Icon dgtIcon = new ImageIcon (dgt.getImage().getScaledInstance(dgt_label.getWidth(), dgt_label.getHeight(), Image.SCALE_DEFAULT));
         dgt_label.setIcon(dgtIcon);
 
+        
         ImageIcon logoAutoescuela = new ImageIcon ("src/main/resources/imagenes/logoAutoescuela.png");
         Icon logoDiego = new ImageIcon (logoAutoescuela.getImage().getScaledInstance(autoescuela_diego_label.getWidth(), autoescuela_diego_label.getHeight(), Image.SCALE_DEFAULT));
         autoescuela_diego_label.setIcon (logoDiego);
@@ -65,7 +68,10 @@ public final class esquemaExamenCoche extends javax.swing.JFrame {
 
     
     
-    public void vaciarTabla() {
+    public static void VaciarTabla() {
+        rutaImagenes.clear();
+        idPregunta.clear();
+        
         String query = "Delete from examen_usuario";
         try(var delete = DriverManager.getConnection(url); 
             var deleteContenido = delete.prepareStatement(query);){ 
@@ -74,8 +80,7 @@ public final class esquemaExamenCoche extends javax.swing.JFrame {
             System.err.println("Error al establecer la consulta");
             System.err.println(ex.toString());
         }
-        
-        
+       
     }
   
     
@@ -505,15 +510,16 @@ public final class esquemaExamenCoche extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(esquemaExamenCoche.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EsquemaExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new esquemaExamenCoche().setVisible(true);
+            new EsquemaExamen().setVisible(true);
         });
     }
 
