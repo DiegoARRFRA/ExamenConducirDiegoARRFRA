@@ -1,8 +1,8 @@
 
 package com.mycompany.examenconducir;
 
-import static com.mycompany.examenconducir.DificultadExamen.numeroPreguntas;
-import static com.mycompany.examenconducir.DificultadExamen.url;
+import static com.mycompany.examenconducir.CreadorExamen.numeroPreguntas;
+import static com.mycompany.examenconducir.CreadorExamen.url;
 import java.awt.Image;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,16 +15,24 @@ import javax.swing.ImageIcon;
  * @author diego
  */
 public final class ResultadoFinal extends javax.swing.JFrame {
+    
+    // Esta es la clase ResultadoFinal, es la clase encargada de mostrar los resultados del examen y de mostrar de manera detallada que respuestas hicimos bien y cual no.
+    // Implementa dos listas como las que vimos en clase personalizadas, cada una de ellas está asociado a un campo de nuestra tabla de examen_usuario.
+    // Por un lado esta las respuetas acertadas y por otro las falladas.
+    
+    // Esta clase se encarga principalmente de rellenar esas listas, calcular con contadores los fallos y establecer mediante una operación el resultado si es aprobado o no.
+    // También hace de puente a nuestra clase de vista personalizada, que con el click permite al usuario recrear la pregunta y nos muestra toda la información sobre la misma
+    
 
-    int contadorAciertos, contadorFallos;
-    public static String idItem;
-    static DefaultListModel listaAciertos,listaFallos ;
+    int contadorAciertos, contadorFallos; // Los contadores, que van a delimitar si hemos acertado o fallado.
+    public static String idItem; // Este es el ID del item que se selecciona en la lista para ver a fondo
+    static DefaultListModel listaAciertos,listaFallos ; // Las dos listas.
     public ResultadoFinal() {
         initComponents();
         listaAciertos = new DefaultListModel();
         listaFallos = new DefaultListModel();
-        setLocationRelativeTo(null);
-        setResizable(false); 
+        
+        // Rellenar las listas y comprobar si esta aprobado.
         rellenarListaAciertos();
         rellenarListaFallos();
         comprobarExamenAprobado();
@@ -32,9 +40,13 @@ public final class ResultadoFinal extends javax.swing.JFrame {
         ImageIcon dgt = new ImageIcon ("src/main/resources/imagenes/dgt.png");
         Icon dgtIcon = new ImageIcon (dgt.getImage().getScaledInstance(dgt_label.getWidth(), dgt_label.getHeight(), Image.SCALE_DEFAULT));
         dgt_label.setIcon(dgtIcon);
+        setLocationRelativeTo(null);
+        setResizable(false); 
     }
 
 
+   // Rellenamos la lista mediante una consulta, y en el bucle del cursor añadimos los elementos que obtenemos de dicha consulta a la lista.
+    // Establecemos un contador, cada vez que ese contador se suma es que se ha añadido un item a la lista.
    public void rellenarListaAciertos () {
         contadorAciertos = 0;
         String rellenarLista = "select id_pregunta from examen_usuario where aciertos is not null"; 
@@ -57,12 +69,14 @@ public final class ResultadoFinal extends javax.swing.JFrame {
                 System.err.println(ex.toString());
             } 
         
+        // Añadimos el modelo y mostramos en la etiqueta cual han sido los aciertos gracias al contador.
         jListaAciertos.setModel(listaAciertos);   
         mostrar_Aciertos.setText("NUMERO DE ACIERTOS :  " + contadorAciertos);
 
     }   
    
-   
+    // Rellenamos la lista mediante una consulta, y en el bucle del cursor añadimos los elementos que obtenemos de dicha consulta a la lista.
+    // Establecemos un contador, cada vez que ese contador se suma es que se ha añadido un item a la lista.
     public void rellenarListaFallos () {
          contadorFallos = 0;
         String rellenarLista = "select id_pregunta from examen_usuario where fallos is not null"; 
@@ -85,9 +99,12 @@ public final class ResultadoFinal extends javax.swing.JFrame {
                 System.err.println(ex.toString());
             } 
         
+        // Añadimos el modelo y mostramos en la etiqueta cual han sido los aciertos fallos al contador.
         jListaFallos.setModel(listaFallos);      
         mostrar_fallos.setText("NUMERO DE FALLOS :  " + contadorFallos);
     }
+    
+    // Comprobamos si el examen está acertado, en función del número de preguntas tendrá unas carácterísticas para aprobar.
     
     public void comprobarExamenAprobado () {
         if (numeroPreguntas == 10 && contadorFallos > 1) {
@@ -315,7 +332,7 @@ public final class ResultadoFinal extends javax.swing.JFrame {
        idItem =  jListaAciertos.getSelectedValue();
        
        
-       MostrarPreguntaErronea  newframe = new MostrarPreguntaErronea ();
+       MostrarPreguntaContestada  newframe = new MostrarPreguntaContestada ();
        newframe.setVisible(true);
        this.dispose();
         
@@ -326,7 +343,7 @@ public final class ResultadoFinal extends javax.swing.JFrame {
         
        idItem =  jListaFallos.getSelectedValue();
       
-       MostrarPreguntaErronea  newframe = new MostrarPreguntaErronea ();
+       MostrarPreguntaContestada  newframe = new MostrarPreguntaContestada ();
        newframe.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jListaFallosValueChanged

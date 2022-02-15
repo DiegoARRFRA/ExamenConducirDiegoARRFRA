@@ -3,30 +3,29 @@ package com.mycompany.examenconducir;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.MessageDigest;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
-import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author diego
  */
 public class Conexion {
+    // Las variables que representan un puntero a la base de datos.
     public static String urlCoche;
     public static String urlMoto;
     public static String urlCamion;
     
-      public static void leerProperties() {
-        
-            Properties prop = new Properties();
+    public static void leerProperties() {
+     
+        // Mediante un tryCatch extraemos el contenido del properties y lo asignamos a unas variables.
+        // Creamos un objeto prop sobre el que extraer todo.
+        Properties prop = new Properties();
             try { 
                 prop.load(Files.newInputStream(Path.of("FicheroProperties.properties"))); 
-                urlCoche = prop.getProperty("urlCoche");
+                urlCoche = prop.getProperty("urlCoche"); // Mediante el getProperty extraemos el contenido asociado a la key y lo asignamos a esta variable.
                 urlMoto= prop.getProperty("urlMoto");  
                 urlCamion = prop.getProperty("urlCamion");  
             }catch (NullPointerException ex) { 
@@ -37,15 +36,14 @@ public class Conexion {
                 System.err.println (" Existe un error que no permite esta operación, revise el codigo");
             }                 
    } 
-        // Establecemos la conexión con la base de Coches
+        // Devuelve la variable coche, cuando es llamado este método es porque el usuario ha seleccionado el coche en la primera interfaz
       
         public static String ConexionBaseCoche () {
             return urlCoche;
-        
-       }     
+       }             
     
         
-        // Establecemos la conexión con la base de Motos
+        // Devuelve la variable moto, cuando es llamado este método es porque el usuario ha seleccionado el coche en la primera interfaz
 
        public static String ConexionBaseMoto () {
             return urlMoto;
@@ -53,15 +51,12 @@ public class Conexion {
        }     
     
         
-        // Establecemos la conexión con la base de Camiones
+        // Devuelve la variable camion, cuando es llamado este método es porque el usuario ha seleccionado el coche en la primera interfaz
         
        public static String ConexionBaseCamion () {
             return urlCamion;
         
        }     
-    
-        
-         
 
     }
     

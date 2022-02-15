@@ -2,8 +2,8 @@
 package com.mycompany.examenconducir;
 
 
-import static com.mycompany.examenconducir.DificultadExamen.numeroPreguntas;
-import static com.mycompany.examenconducir.DificultadExamen.url;
+import static com.mycompany.examenconducir.CreadorExamen.numeroPreguntas;
+import static com.mycompany.examenconducir.CreadorExamen.url;
 import static com.mycompany.examenconducir.ObjetoImagenes.rellenarArrayImagenes;
 import static com.mycompany.examenconducir.ObjetoImagenes.rutaImagenes;
 import static com.mycompany.examenconducir.ObjetoPreguntas.getEnunciado_pregunta;
@@ -30,9 +30,21 @@ import javax.swing.JOptionPane;
  * @author diego
  */
 public final class EsquemaExamen extends javax.swing.JFrame {
-   
-
-    ArrayList<Integer> opcionesBotones= new ArrayList<>();
+  
+    // Nuestra clase EsquemaExamen es la clase donde se desarrolla todo el contenido del examen. Podemos decir que es la clase que trata con todos los objetos
+    // Y clases relacionadas con todo el contenido de nuestros examenes.
+    
+    // Sus funciones son las siguientes
+    // 1- Limpiar los elementos volatiles guardados en memoria, permitiendo poder realizar varios test sin salirnos de la aplicación.
+    // 2- Es la encargada de entrelazar las clases de ObjetoPregunta,ObjetoRespuesta,ObjetoImagen.
+    // 3- Es la encargada de mostrar por pantalla todo lo relacionado con dichos objetos
+    // 4- Coloca de manera Random las preguntas y las respuestas en los botones.
+    // 5- Aumenta los contadores necesarios para la lectura y tratamiento de los datos
+    // 6- Rellena la información recogida en nuestra tabla examen_usuario que es la que examina el rendimiento del usuario durante el examen, mostrando luego todo pregunta por pregunta
+    // 7- Distingue las preguntas acertadas y falladas y las refleja.
+    // 8- Variables de control del flujo del programa.
+    
+    ArrayList<Integer> opcionesBotones= new ArrayList<>(); //  Almacena los numeros random generados para delimitar el lugar donde poner los textos.
     public boolean control = false; // Para comprobar que se han marcado todas las opciones
     public int respuestaCorrecta; // Para saber que se ha seleccionado la opción correcta en el boton marcado por el usuario
     public int numeroPreguntaActual = 1; // Numero de la pregunta actual, empezando por 1
@@ -45,11 +57,11 @@ public final class EsquemaExamen extends javax.swing.JFrame {
 
     public EsquemaExamen() {
         initComponents();
-        VaciarTabla();       
-        obtenerExamen();
-        establecerElementos();
-        setLocationRelativeTo(null);
-        setResizable(false);
+        VaciarTabla();        // Vacia la tabla de examen_usuario para trabajar desde cero y rellenarla cada examen.
+        obtenerExamen();       // El método encargado de recoger las preguntas y respuestas.
+        establecerElementos(); // El método encargado de establecer los datos en nuestro frame.
+        
+        // Por defecto empezamos siempre en la primera pregunta.
         num_Mostrado.setText(numeroPreguntaActual + "");
         
         ImageIcon dgt = new ImageIcon ("src/main/resources/imagenes/dgt.png");
@@ -61,17 +73,15 @@ public final class EsquemaExamen extends javax.swing.JFrame {
         Icon logoDiego = new ImageIcon (logoAutoescuela.getImage().getScaledInstance(autoescuela_diego_label.getWidth(), autoescuela_diego_label.getHeight(), Image.SCALE_DEFAULT));
         autoescuela_diego_label.setIcon (logoDiego);
         this.setIconImage(logoAutoescuela.getImage());
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
-    
-    
-    // Para establecer una conexión a una base de datos en función de lo seleccionado por el usuario
-
-    
-    
+       
+    // Método de vaciado de tabla y de Arraylist (Estos últimos son una doble capa de aseguración de borrado).
     public static void VaciarTabla() {
         rutaImagenes.clear();
         idPregunta.clear();
-        
+        // La sentencia con su trywith-resources y la conexión.
         String query = "Delete from examen_usuario";
         try(var delete = DriverManager.getConnection(url); 
             var deleteContenido = delete.prepareStatement(query);){ 
@@ -121,17 +131,33 @@ public final class EsquemaExamen extends javax.swing.JFrame {
        opcionesBotones.clear();
 
     }
-    
-        public void ponerImagenes () {
-         ImageIcon imagenExamen = new ImageIcon (rutaImagenes.get(contador));
+    // Establece las imagenes y nos las pone en nuestro label, gracias al método del objeto imagen y el contador de esta clase siempre están sincronizados.
+        public void ponerImagenes () {          
+        ImageIcon imagenExamen = new ImageIcon (rutaImagenes.get(contador));
         Icon imagenExamenIc = new ImageIcon (imagenExamen.getImage().getScaledInstance(foto_preguntas.getWidth(), foto_preguntas.getHeight(), Image.SCALE_DEFAULT));
         foto_preguntas.setIcon(imagenExamenIc);
     }
+        
+        // Este método se encarga de rellenar el arrayList opcionesBotones, es un arraylist compuesto de 3 elementos que son el numero 1,2,3.
+        // Son generados de manera random entre sí mismos y se guardan de manera aleatoria en cada posición de nuestro arrayList.
+       public void numeroRandom () {    
+       Random random = new Random();
+       while (opcionesBotones.size() < 3) {
+            //El rango de numeros que queremos en el array
+            int randomNumber = random.nextInt((3 - 1) + 1) + 1;
+            //Para evitar duplicados
+            if (!opcionesBotones.contains(randomNumber)) {
+                opcionesBotones.add(randomNumber);
+            }
+        } 
+    }
          
     
-
     
-    
+    // Nos elige de manera Random que va a ir en nuestro boton_uno.
+    // Estos métodos de selección random de los botones uno, dos y tres se fundamentan en la idea de que cada botón tendrá asociado siempre un get de nuestro arraylist.
+    // El función del número que haya random en ese get del arraylist, obtendran una respuesta correcta, o una incorrecta.
+    // Al no haber repetidos y realizar este proceso con todas las posibilidades en esa posición nos aseguramos que el contenido siempre quede relleno y sea totalmente aleatorio.
     public void elegirRandomOpcionUno () {
             if(null != opcionesBotones.get(0)) switch (opcionesBotones.get(0)) {
             case 1 -> {
@@ -149,8 +175,7 @@ public final class EsquemaExamen extends javax.swing.JFrame {
             }
             default -> {
                 }
-        } 
-       
+        }    
     }
     
     public void elegirRandomOpcionDos () {
@@ -193,18 +218,8 @@ public final class EsquemaExamen extends javax.swing.JFrame {
        
     }
     
-    public void numeroRandom () {    
-       Random random = new Random();
-       while (opcionesBotones.size() < 3) {
-            //El rango de numeros que queremos en el array
-            int randomNumber = random.nextInt((3 - 1) + 1) + 1;
-            //Para evitar duplicados
-            if (!opcionesBotones.contains(randomNumber)) {
-                opcionesBotones.add(randomNumber);
-            }
-        } 
-    }
-    
+    // Este es un método que se encarga de darnos la información sobre que posición seleccionó el usuario al elegir la pregunta.
+    // Es lo que nos va a permitir luego reconstruir las preguntas.
     public void botonMarcado () {
         if (pregunta_uno.isSelected()) {
             numeroBotonSeleccionado = 1;
@@ -219,15 +234,21 @@ public final class EsquemaExamen extends javax.swing.JFrame {
         }
     }
     
+    // Método de comprobación de marcado. En caso de que no esten marcados no dejaremos pasar de pregunta.
     public void todoMarcado () {
         control = !(!pregunta_uno.isSelected() && !pregunta_dos.isSelected() && !pregunta_tres.isSelected());
     }
     
+    // Comprobamos a ver que boton se ha marcado, y con las variables de recogida que hemos ido almacenando introducimos toda la información completa
+    // Sobre todos los aspectos relevantes que ha elegido el usuario, y nos permite reconstruir cada pregunta de manera idéntica.
     public void insertarRespuestaUsuario () {
         botonMarcado ();
         variableRecogidaBotonUno = pregunta_uno.getText();
         variableRecogidaBotonDos = pregunta_dos.getText();
         variableRecogidaBotonTres = pregunta_tres.getText();
+        
+        // En caso de que el usuario elija lo mismo que donde la posición donde estaba la respuesta correcta, podemos decir que acertó. 
+        // Si acierta llamamos a insertarTablaAcierto y sino a insertar un fallo.
         if (pregunta_uno.isSelected() && respuestaCorrecta == 1  ||
             pregunta_dos.isSelected() && respuestaCorrecta == 2  ||
             pregunta_tres.isSelected() && respuestaCorrecta == 3 ) {
@@ -277,6 +298,7 @@ public final class EsquemaExamen extends javax.swing.JFrame {
         }  
     }
      
+     // Cada vez que pasamos de pregunta, aumentamos los marcadores para la próxima.
      public void aumentarMarcadores () {
         contador++;
         numeroPreguntaActual++;
@@ -456,35 +478,37 @@ public final class EsquemaExamen extends javax.swing.JFrame {
 
     private void boton_avanzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_avanzarActionPerformed
        
-        
+        // Si las preguntas actual es la misma que el numero máximo, podemos afirmar que no hay más preguntas
         if (numeroPreguntaActual == numeroPreguntas ) {
             boton_avanzar.setText("No hay mas preguntas ");
             JOptionPane.showMessageDialog(this, "Examen terminado ");
         } else if ( numeroPreguntaActual > numeroPreguntas ) {
-            boton_avanzar.setEnabled(false);
-
+            boton_avanzar.setEnabled(false); // En caso de que se intente proseguir se deshabilita el botón.
         } else {
+            // Si las preguntas no son iguales, sabemos que tienen que ser menores por el control anterior del elseIf.
+            // Comprobamos los marcados
             todoMarcado ();    
+            // Si la variable es falsa, no dejamos continuar
             if (control == false) {
                 JOptionPane.showMessageDialog(this, "Por favor seleccione una opción antes de continuar");
             } else {
+                // Si la variable es correcta, insertamos los datos recogidos de esta pregunta, aumentamos los marcadores y establecemos los nuevos elementos de la siguiente.
                     insertarRespuestaUsuario();
                     aumentarMarcadores(); 
                     establecerElementos(); 
-         }
-     
-       
-       
-            
+            }
         }
       
     }//GEN-LAST:event_boton_avanzarActionPerformed
 
     private void boton_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_finalizarActionPerformed
-         insertarRespuestaUsuario();
+       // Insertamos la respuesta del usuario
         if (numeroPreguntaActual < numeroPreguntas ) {
             JOptionPane.showMessageDialog(this, "El examen no ha terminado ");
         } else {
+            // Insertamos y nos vamos a la pantalla de ver errores y aciertos del examen.
+            
+            insertarRespuestaUsuario();
             ResultadoFinal  newframe = new ResultadoFinal ();
             newframe.setVisible(true);
             this.dispose();

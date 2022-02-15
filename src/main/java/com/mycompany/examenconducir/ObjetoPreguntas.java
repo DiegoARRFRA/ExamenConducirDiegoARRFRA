@@ -4,8 +4,8 @@
  */
 package com.mycompany.examenconducir;
 
-import static com.mycompany.examenconducir.DificultadExamen.numeroPreguntas;
-import static com.mycompany.examenconducir.DificultadExamen.url;
+import static com.mycompany.examenconducir.CreadorExamen.numeroPreguntas;
+import static com.mycompany.examenconducir.CreadorExamen.url;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,11 +16,14 @@ import java.util.ArrayList;
  */
 public class ObjetoPreguntas {
 
+    // El objeto Preguntas es el objeto que trata todo lo relacionado con la tabla preguntas de nuestras bases de datos
+    // Está conformado principlamente por dos arraylist que representan el ID y el Contenido de las preguntas
     public static ArrayList<String> enunciadoPregunta = new ArrayList<String>();
     public static ArrayList<Integer> idPregunta = new ArrayList<Integer>();
 
 
-
+    // Se conforma de los getter de los arrayList y su "Setter" que está fundamentado en una consulta de nuestra base de datos y obtención de manera random de las preguntas
+    // para el examen actual.
     public static int getIdPregunta(int k) {
         return idPregunta.get(k);
     }
@@ -31,6 +34,10 @@ public class ObjetoPreguntas {
     }
 
     // Este método sirve para obtener las preguntas de la base de datos, las obtenemos de forma random en función del numero de preguntas que haya querido seleccionar el Usuario.
+    // Lo primero que hacemos es un borrado de memoria de los arrayList, sirve para deshechar residuos que pudieran quedar de ejecuciones pasadas de estos métodos. Al borrarlo
+    // Nos aseguramos que todo el contenido de nuestras sentencias va a entrar en arraysLists nuevos.
+   // Hacemos la Select en la que establecemos como limit el parámetro numeroPreguntas, que es aquel que definimos en la clase CreadorExamen y nos marcaba numero de preguntas que seleccionamos
+    // Con el raddio button.
     public static void obtenerPreguntas () {
         enunciadoPregunta.clear();
         idPregunta.clear();

@@ -286,42 +286,42 @@ public class InterfazPrincipalAutoescuela extends javax.swing.JFrame {
         // A continuación podemos observar como en función del elemento en el cual clicken, hemos creado un evento de on MouseClicked
         //Que asigna un valor a nuestra variable baseElegida y nos pasa de forma inmediata a la siguiente pantalla.
         baseElegida = "coche";
-        DificultadExamen  newframe = new DificultadExamen ();
+        CreadorExamen  newframe = new CreadorExamen ();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logo_cocheMouseClicked
 
     private void textoCocheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textoCocheMouseClicked
         baseElegida = "coche";   
-        DificultadExamen  newframe = new DificultadExamen ();
+        CreadorExamen  newframe = new CreadorExamen ();
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_textoCocheMouseClicked
 
     private void textoMotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textoMotoMouseClicked
         baseElegida = "moto";
-        DificultadExamen  newframe = new DificultadExamen ();
+        CreadorExamen  newframe = new CreadorExamen ();
         newframe.setVisible(true);
         this.dispose();      
     }//GEN-LAST:event_textoMotoMouseClicked
 
     private void logo_motoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logo_motoMouseClicked
         baseElegida = "moto";
-        DificultadExamen  newframe = new DificultadExamen ();
+        CreadorExamen  newframe = new CreadorExamen ();
         newframe.setVisible(true);
         this.dispose();   
     }//GEN-LAST:event_logo_motoMouseClicked
 
     private void textoCamionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textoCamionMouseClicked
         baseElegida = "camion";
-        DificultadExamen  newframe = new DificultadExamen ();
+        CreadorExamen  newframe = new CreadorExamen ();
         newframe.setVisible(true);
         this.dispose();  
     }//GEN-LAST:event_textoCamionMouseClicked
 
     private void logo_camionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logo_camionMouseClicked
         baseElegida = "camion";
-        DificultadExamen  newframe = new DificultadExamen ();
+        CreadorExamen  newframe = new CreadorExamen ();
         newframe.setVisible(true);
         this.dispose();   
     }//GEN-LAST:event_logo_camionMouseClicked

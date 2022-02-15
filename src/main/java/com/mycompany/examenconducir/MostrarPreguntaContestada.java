@@ -1,9 +1,8 @@
 
 package com.mycompany.examenconducir;
 
-import static com.mycompany.examenconducir.DificultadExamen.url;
+import static com.mycompany.examenconducir.CreadorExamen.url;
 import static com.mycompany.examenconducir.ObjetoImagenes.rutaImagenes;
-import static com.mycompany.examenconducir.ObjetoPreguntas.idPregunta;
 import static com.mycompany.examenconducir.ResultadoFinal.idItem;
 import java.awt.Color;
 import java.awt.Image;
@@ -16,24 +15,26 @@ import javax.swing.ImageIcon;
  *
  * @author diego
  */
-public class MostrarPreguntaErronea extends javax.swing.JFrame {
-    // El funcionamiento de esta clase se basa en recrear la pregunta exactamente en el estado en que el usuario la vio, y mostrar las opciones falsas y correctas
+public class MostrarPreguntaContestada extends javax.swing.JFrame {
+    // El funcionamiento de esta clase se basa en recrear la pregunta exactamente en el estado en que el usuario la marcó, y mostrar las opciones falsas y correctas
    
     // Estas variables son las que van a recoger los datos que leemos de la tabla del examen del usuario.
     String enunciado_pregunta, enunciado_boton_uno, enunciado_boton_dos, enunciado_boton_tres;
     int posicion_correcta;
     int seleccion;
     
-    public MostrarPreguntaErronea() {
+    public MostrarPreguntaContestada() {
         initComponents();
-        setLocationRelativeTo(null);
-        setResizable(false);
+     
         ImageIcon logoAutoescuela = new ImageIcon ("src/main/resources/imagenes/logoAutoescuela.png");
         this.setIconImage(logoAutoescuela.getImage());
         
         ImageIcon dgt = new ImageIcon ("src/main/resources/imagenes/dgt.png");
         Icon dgtIcon = new ImageIcon (dgt.getImage().getScaledInstance(dgt_label.getWidth(), dgt_label.getHeight(), Image.SCALE_DEFAULT));
         dgt_label.setIcon(dgtIcon);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        
         // El método rellenar contenido es el que va a operar con todos los submetodos
         rellenarContenido();
     }
@@ -43,7 +44,6 @@ public class MostrarPreguntaErronea extends javax.swing.JFrame {
         // La mision de este método es
         // 1. Asignar a la etiqueta numero_pregunta su numero, para informar al usuario
         label_numero_pregunta.setText(idItem);
-        
         
         // 2. Leer la tabla del examen, recogiendo todos los datos relativos a las preguntas aparecidas para mostrarlas
         leerTablaExamen();
@@ -134,7 +134,6 @@ public class MostrarPreguntaErronea extends javax.swing.JFrame {
        
     public void rellenarFoto () {     
        // Obtenemos la foto que había en el momento.
- 
         ImageIcon imagenRevision = new ImageIcon (rutaImagenes.get(Integer.parseInt(idItem) - 1));
         Icon imagenExamenIc = new ImageIcon (imagenRevision.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_DEFAULT));
         foto.setIcon(imagenExamenIc);
@@ -321,20 +320,21 @@ public class MostrarPreguntaErronea extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MostrarPreguntaErronea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPreguntaContestada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MostrarPreguntaErronea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPreguntaContestada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MostrarPreguntaErronea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPreguntaContestada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MostrarPreguntaErronea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPreguntaContestada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MostrarPreguntaErronea().setVisible(true);
+                new MostrarPreguntaContestada().setVisible(true);
             }
         });
     }

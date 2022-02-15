@@ -130,6 +130,9 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="radioBoton_diezPreguntas">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup_numeroPreguntas"/>
             </Property>

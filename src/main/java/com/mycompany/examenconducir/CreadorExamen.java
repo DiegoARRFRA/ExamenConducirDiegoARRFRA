@@ -16,18 +16,21 @@ import javax.swing.JOptionPane;
  *
  * @author diego
  */
-public final class DificultadExamen extends javax.swing.JFrame {
-    boolean permitido = false;
-    public static int numeroPreguntas;
+public final class CreadorExamen extends javax.swing.JFrame {
+    boolean permitido = false; // Una variable de control para evitar errores.
+    public static int numeroPreguntas; // La variable que va a determinar cuantas preguntas tiene nuestro examen.
     public static  String url; // La url determinada en función de lo elegido
 
 
-    public DificultadExamen() {
+    public CreadorExamen() {
         initComponents();
+        // Leemos los properties, para rellenar los elementos de URL
         leerProperties();   
+        // Llamamos al método de conexión base, el encargado de mediante un switch elegir que conexión establecemos
         conexionBase ();
-        setLocationRelativeTo(null);
-        setResizable(false);
+        
+        // Parametros de configuración del layout.
+        
         
         ImageIcon logoAutoescuela = new ImageIcon ("src/main/resources/imagenes/logoAutoescuela.png");
         this.setIconImage(logoAutoescuela.getImage());
@@ -35,11 +38,15 @@ public final class DificultadExamen extends javax.swing.JFrame {
         ImageIcon dgt = new ImageIcon ("src/main/resources/imagenes/dgt.png");
         Icon dgtIcon = new ImageIcon (dgt.getImage().getScaledInstance(dgt_label.getWidth(), dgt_label.getHeight(), Image.SCALE_DEFAULT));
         dgt_label.setIcon(dgtIcon);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
     }
     
     
-      // Para establecer una conexión a una base de datos en función de lo seleccionado por el usuario
+    // Para establecer una conexión a una base de datos en función de lo seleccionado por el usuario
+    // Importamos el baseElegida y en función de su valor establecemos una conexión con una u otra base de datos
+    // gracias a los getter que creamos en la clase Conexión
     public void conexionBase () {
         switch (baseElegida) {
             case "coche" -> url = ConexionBaseCoche();
@@ -49,13 +56,15 @@ public final class DificultadExamen extends javax.swing.JFrame {
             }
         }
     }
-  
     
+    // Este método es el encargado de delimitar el numero de preguntas que tendrá nuestro examen
+    // Asignando un valor fijo a nuestra variable en función del radioButton que este seleccionado, el radioButton no cambia con el isSelected
+    // ya que en el momento que este método entra en acción es cuando el usuario ha dado al botón de avanzar, por lo que la decisión va a ser siempre definitiva.
     public void numeroPreguntas() {
         
         if (radioBoton_diezPreguntas.isSelected()) {
             numeroPreguntas = 10;
-            permitido = true;
+            permitido = true; // Si el boton es seleccionado convertimos nuestra variable de control a true.
         } 
         
         if (radioBoton_quincePreguntas.isSelected()) {
@@ -67,8 +76,11 @@ public final class DificultadExamen extends javax.swing.JFrame {
             permitido = true;
         }
         
+        // Establecemos una doble comprobación de que está todo marcado.
+        if (!radioBoton_diezPreguntas.isSelected() && !radioBoton_quincePreguntas.isSelected()&& !radioBoton_veintePreguntas.isSelected()) { 
+            permitido = false;
+        }
     }
-   
 
    
     @SuppressWarnings("unchecked")
@@ -99,6 +111,7 @@ public final class DificultadExamen extends javax.swing.JFrame {
         radioBoton_veintePreguntas.setForeground(new java.awt.Color(0, 0, 0));
         radioBoton_veintePreguntas.setText("20 preguntas");
 
+        radioBoton_diezPreguntas.setBackground(new java.awt.Color(0, 0, 255));
         buttonGroup_numeroPreguntas.add(radioBoton_diezPreguntas);
         radioBoton_diezPreguntas.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         radioBoton_diezPreguntas.setForeground(new java.awt.Color(0, 0, 0));
@@ -191,24 +204,24 @@ public final class DificultadExamen extends javax.swing.JFrame {
 
     private void Boton_InsertarPreguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_InsertarPreguntasActionPerformed
         
+            // Nos envia directos a la activity de Insertar Preguntas en nuestra base de datos.
             InsertarPreguntas  newframe = new InsertarPreguntas ();
             newframe.setVisible(true);
-            this.dispose();
-        
+            this.dispose();    
     }//GEN-LAST:event_Boton_InsertarPreguntasActionPerformed
 
     private void Boton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_confirmarActionPerformed
+        // Llamamos a numero de preguntas para ver cuantas vamos a establecer para el examen
         numeroPreguntas();
-        if (permitido = false) {
+        // Si nuestra variable de control es falsa, quiere decir que no se ha marcado ninguna opción en el radioButton, por lo que no dejamos avanzar.
+        if (permitido == false) {
             JOptionPane.showMessageDialog(this,"Se debe de seleccionar un número de preguntas para crear el examen");          
         } else {
+            // En caso de que sea verdadera, nos dirigimos a nuestra clase EsquemaExamen que es en la que tratamos con los objetos relacionados.
             EsquemaExamen  newframe = new EsquemaExamen ();
             newframe.setVisible(true);
             this.dispose();
         }
-    
-        
-        
     }//GEN-LAST:event_Boton_confirmarActionPerformed
 
     /**
@@ -228,20 +241,21 @@ public final class DificultadExamen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DificultadExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreadorExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DificultadExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreadorExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DificultadExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreadorExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DificultadExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreadorExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DificultadExamen().setVisible(true);
+                new CreadorExamen().setVisible(true);
             }
         });
     }

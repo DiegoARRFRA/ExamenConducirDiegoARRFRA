@@ -4,7 +4,7 @@
  */
 package com.mycompany.examenconducir;
 
-import static com.mycompany.examenconducir.DificultadExamen.url;
+import static com.mycompany.examenconducir.CreadorExamen.url;
 import static com.mycompany.examenconducir.ObjetoPreguntas.idPregunta;
 import java.sql.DriverManager;
 import java.sql.SQLException;
