@@ -329,9 +329,8 @@ public final class ResultadoFinal extends javax.swing.JFrame {
 
     private void jListaAciertosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListaAciertosValueChanged
         
-       idItem =  jListaAciertos.getSelectedValue();
-       
-       
+       idItem =  jListaAciertos.getSelectedValue();      
+       // Asignamos el value obtenido al idItem
        MostrarPreguntaContestada  newframe = new MostrarPreguntaContestada ();
        newframe.setVisible(true);
        this.dispose();

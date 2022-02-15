@@ -123,7 +123,6 @@ public final class EsquemaExamen extends javax.swing.JFrame {
        numeroRandom();
        // 2- Elige las respuestas incorrectas posibles relacionadas al id_pregunta que está actualmente
        elegirRandomIdRespuestaIncorrecta();
-       // 3- Elige de forma random el tipo de respuesta que tendrá cada botón en función de lo marcado en el array random que operamos arriba.
        elegirRandomOpcionUno();
        elegirRandomOpcionDos();
        elegirRandomOpcionTres(); 
@@ -155,7 +154,6 @@ public final class EsquemaExamen extends javax.swing.JFrame {
     
     
     // Nos elige de manera Random que va a ir en nuestro boton_uno.
-    // Estos métodos de selección random de los botones uno, dos y tres se fundamentan en la idea de que cada botón tendrá asociado siempre un get de nuestro arraylist.
     // El función del número que haya random en ese get del arraylist, obtendran una respuesta correcta, o una incorrecta.
     // Al no haber repetidos y realizar este proceso con todas las posibilidades en esa posición nos aseguramos que el contenido siempre quede relleno y sea totalmente aleatorio.
     public void elegirRandomOpcionUno () {
